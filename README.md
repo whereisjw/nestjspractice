@@ -161,5 +161,41 @@ export class PostsController {
     return id;
   }
 }
+```
+
+# Dependency Injection , Inversion of Control
 
 ```
+class A {
+const b = B()
+}
+
+class B{}
+
+A라는 클래스를 인스턴스를 만들때마다 A안에다가 클래스 B를 새로 생성한다.
+```
+
+class A{
+constructor(instance:B)
+}
+
+class B{
+
+}
+
+# SQL기본기
+
+- 데이터는 왜 초기화되는가?
+
+  - hdd/ssd(영구적으로 저장) -> RAM(실행하는 데이터만 램에 올라감 프로그램이 재시작되면 리셋,하지만 속도가 빠름)
+  - 그래서 프로그램이 종료되더라도 데이터를 유지하려면 HDD/SDD에 데이터를 작성해야함.
+  - 가장 흔히 사용되는 방법이 SQL이다.
+
+  # Docker 이론
+
+- nestjs 프로젝트를 하다보면 여러개의 컴퓨터에서 구동을 할 수 있어야함(팀협업, 배포 등)
+- 멀티플랫폼(윈도우,맥,리눅스) 설치 절차가 대로 하면 프로그램이 시작하면 되는 것이 dockerfile
+- 도커가 나온 이후 배포와 CI/CD 가 매우 쉬워짐
+- 같은 조건에서 같은 환경으로 항상 프로그램이 시작되도록 해당 컨테이너를 실행할 수 있도록 도와주는 도구
+- 가상화(Virtual Machine) vs 도커(Docker)
+  - 가상화 할경우 hypervisor가 올라감
