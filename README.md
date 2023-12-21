@@ -193,9 +193,42 @@ class B{
 
   # Docker 이론
 
+- ### 같은 조건에서 같은 환경으로 항상 프로그램이 시작되도록 해당 컨테이너를 실행할 수 있도록 도와주는 도구
 - nestjs 프로젝트를 하다보면 여러개의 컴퓨터에서 구동을 할 수 있어야함(팀협업, 배포 등)
 - 멀티플랫폼(윈도우,맥,리눅스) 설치 절차가 대로 하면 프로그램이 시작하면 되는 것이 dockerfile
 - 도커가 나온 이후 배포와 CI/CD 가 매우 쉬워짐
-- 같은 조건에서 같은 환경으로 항상 프로그램이 시작되도록 해당 컨테이너를 실행할 수 있도록 도와주는 도구
+
 - 가상화(Virtual Machine) vs 도커(Docker)
+
   - 가상화 할경우 hypervisor가 올라감
+
+- ### docker compose
+- container가많아지면서 관리하기위해 kubernetes(쿠보네티스 점유율이 가장 높음), docker compose(여러개의 하드웨어에서 작동한다고 생각하고 만들어지지는 않은 기술임), docker swarm
+- 단점 : docker compose만의 문법이 있음
+
+- ### 설치
+- docker,postgresql 익스텐션다운로드
+- https://www.docker.com/products/docker-desktop/
+- 실행이 안된다면 cmd 에서 wsl --update (윈도우 불법사용자는 업데이트가 안될 수 있음)
+- https://hub.docker.com/_/postgres
+- docker-compose.yaml 파일생성
+
+```
+services:
+  postgres:
+    image: postgres:15
+    restart: always
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+```
+
+- postgres-data 폴더생성
+- 도커가 켜져있다면 터미널에서
+- ### docker-compose up 명령어 입력
+- ctrl+shift+p postgresql:add connection 입력후 위 유저 비번 db를 다 입력후 커넥션이름 설정후 좌측 익스텐션아이콘눌러서 확인
