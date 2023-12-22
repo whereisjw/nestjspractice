@@ -232,3 +232,53 @@ services:
 - 도커가 켜져있다면 터미널에서
 - ### docker-compose up 명령어 입력
 - ctrl+shift+p postgresql:add connection 입력후 위 유저 비번 db를 다 입력후 커넥션이름 설정후 좌측 익스텐션아이콘눌러서 확인
+
+# typeorm 설치 및 세팅
+
+- yarn add @nestjs/typeorm typeorm pg
+- entities폴더생성
+- posts.entity.ts 파일생성
+
+```
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+
+@Entity()
+export class PostsModel {
+  @PrimaryGeneratedColumn()
+  id: string;
+
+  @Column()
+  writer: string;
+
+  @Column()
+  title: string;
+
+  @Column()
+  content: string;
+
+  @Column()
+  likeCount: number;
+
+  @Column()
+  commentCount: number;
+}
+
+```
+
+```
+//app.module.ts
+@Module({
+  imports: [
+    PostsModule,
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: '127.0.0.1',
+      port: 5432,
+      username: 'postgres',
+      password: 'postgres',
+      database: 'postgres',
+      entities: [PostsModel], // import한 entity는 여기에 입력하기
+      synchronize: true,  // 개발환경에서는 자동싱크 true 배포환경에는 false로 하는게 나음
+    }),
+  ],
+```
