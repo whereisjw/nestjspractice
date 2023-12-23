@@ -282,3 +282,19 @@ export class PostsModel {
     }),
   ],
 ```
+
+- repository 주입시키기
+- repository는 DB와 브릿지 역할을 해줌
+
+```
+// posts.module.ts
+  imports: [TypeOrmModule.forFeature([PostsModel])],
+```
+
+```
+// posts.service.ts
+  constructor(
+    @InjectRepository(PostsModel)
+    private readonly postsRepository: Repository<PostsModel>,
+  ) {}
+```
