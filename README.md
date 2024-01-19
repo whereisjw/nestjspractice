@@ -298,3 +298,19 @@ export class PostsModel {
     private readonly postsRepository: Repository<PostsModel>,
   ) {}
 ```
+
+# Authentication
+### session vs jwt token
+- ![alt text](image.png)
+### session
+- 유저의 정보를 데이터에 저장하고 상태를 유지하는도구
+- 특수한 ID값으로 구성되어있음
+- 서버에서 데이터가 저장되기때문에 클라이언트에 사용자 정보가 노출도리 위험이 없다.
+### jwt token
+- 유저의 정보를 base 64로 인코됭된 string 값에 저장하는 도구
+- header payload signature 로 구성되어있음 
+- 서버에서만 생성되고 클라이언트에 저장됨
+- 클라이언트에 토큰을 저장하기 때문에 정보유출의 위험이 있음
+
+
+

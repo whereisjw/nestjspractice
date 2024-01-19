@@ -48,7 +48,9 @@ export class PostsService {
   ) {}
 
   async getPosts() {
-    return this.postsRepository.find();
+    return this.postsRepository.find({
+      relations: ['writer'],
+    });
   }
 
   async getPost(id: number) {
@@ -56,6 +58,7 @@ export class PostsService {
       where: {
         id,
       },
+      relations: ['writer'],
     });
 
     if (!post) {
@@ -64,12 +67,14 @@ export class PostsService {
     return post;
   }
 
-  async postPosts(writer: string, title: string, content: string) {
+  async postPosts(writerId: number, title: string, content: string) {
     // create > 저장할 객체를 생성한다.
     // save -> 객체를저장한다 (create메서드에서 생성한 객체로)
 
     const post = this.postsRepository.create({
-      writer,
+      writer: {
+        id: writerId,
+      },
       title,
       content,
       likeCount: 0,
@@ -81,7 +86,7 @@ export class PostsService {
     return post;
   }
 
-  async putPost(id: number, writer: string, title: string, content: string) {
+  async putPost(id: number, title: string, content: string) {
     // save의 기능
     // 만약에 데이터가 존재하지 않는다면 새로 생성한다
     //  데이터가 존재한다면 존재하는 값을 업데이트한다
@@ -93,10 +98,6 @@ export class PostsService {
 
     if (!post) {
       throw new NotFoundException();
-    }
-
-    if (writer) {
-      post.writer = writer;
     }
 
     if (title) {

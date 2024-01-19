@@ -1,12 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { UserModel } from 'src/users/entities/users.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class PostsModel {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  writer: string;
+  //user테이블과 연동하기 ,null이 될수없다
+  @ManyToOne(() => UserModel, (user) => user.posts, {
+    nullable: false,
+  })
+  writer: UserModel;
 
   @Column()
   title: string;
@@ -20,4 +24,3 @@ export class PostsModel {
   @Column()
   commentCount: number;
 }
-

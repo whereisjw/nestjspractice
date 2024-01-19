@@ -1,43 +1,6 @@
 import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put } from '@nestjs/common';
 import { PostsService } from './posts.service';
 
-interface PostModel {
-  id: number;
-  writer: string;
-  title: string;
-  content: string;
-  image?: string;
-  likeCount: number;
-  commentCount: number;
-}
-
-let posts: PostModel[] = [
-  {
-    id: 1,
-    writer: '작성자',
-    title: '글제목',
-    content: '글내용',
-    commentCount: 2,
-    likeCount: 9,
-  },
-  {
-    id: 2,
-    writer: 'newjeans_fan',
-    title: '뉴진스 민지',
-    content: '뉴진스 민지의 무대 의상',
-    commentCount: 21,
-    likeCount: 92,
-  },
-  {
-    id: 3,
-    writer: 'newjeans_fan',
-    title: '뉴진스 해린',
-    content: '춤 연습하는 뉴진스 해린',
-    commentCount: 4,
-    likeCount: 5,
-  },
-];
-
 // 1) get /posts
 // 모든 posts를 다 가져온다
 
@@ -76,8 +39,8 @@ export class PostsController {
   // post생성한다
 
   @Post()
-  postPosts(@Body('writer') writer: string, @Body('title') title: string, @Body('content') content: string) {
-    return this.postsService.postPosts(writer, title, content);
+  postPosts(@Body('writerId') writerId: number, @Body('title') title: string, @Body('content') content: string) {
+    return this.postsService.postPosts(writerId, title, content);
   }
 
   // 4 put /posts/:id
@@ -86,11 +49,11 @@ export class PostsController {
   @Put(':id')
   putPost(
     @Param('id') id: string,
-    @Body('writer') writer: string,
+
     @Body('title') title: string,
     @Body('content') content: string,
   ) {
-    return this.postsService.putPost(+id, writer, title, content);
+    return this.postsService.putPost(+id, title, content);
   }
 
   // 5 delete /posts/:id
